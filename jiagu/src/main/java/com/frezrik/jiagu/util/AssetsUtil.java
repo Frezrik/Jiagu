@@ -3,6 +3,8 @@ package com.frezrik.jiagu.util;
 import android.content.Context;
 import android.os.Build;
 
+import com.frezrik.jiagu.StubApp;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,7 +19,7 @@ public class AssetsUtil {
         if (!jiaguDir.exists()) {
             jiaguDir.mkdir();
         }
-        String destSo = absolutePath + "/.jiagu/libjiagu.so";
+        String destSo = absolutePath + "/.jiagu/libjiagu" + StubApp.VERSION +".so";
 
         boolean is64 = Build.CPU_ABI.contains("64") || Build.CPU_ABI2.contains("64");
         String soName = is64 ? "libjiagu_64.so" : "libjiagu.so";
@@ -34,6 +36,17 @@ public class AssetsUtil {
     private static void writeFile(Context context, String in, String out) {
         if (new File(out).exists())
             return;
+
+        File jiaguDir = new File(out).getParentFile();
+        if (jiaguDir != null) {
+            File[] files = jiaguDir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();
+                }
+            }
+        }
+
         InputStream is = null;
         OutputStream os = null;
         try {

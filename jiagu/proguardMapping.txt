@@ -1,22 +1,22 @@
 # compiler: R8
 # compiler_version: 2.1.62
-# pg_map_id: d34730d
+# pg_map_id: ee2a1af
 # common_typos_disable
 com.frezrik.jiagu.StubApp -> com.frezrik.jiagu.StubApp:
     1:1:void <init>():9:9 -> <init>
-    1:3:void attachBaseContext(android.content.Context):13:15 -> attachBaseContext
-    4:14:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):15:25 -> attachBaseContext
-    4:14:void attachBaseContext(android.content.Context):17 -> attachBaseContext
-    15:34:void com.frezrik.jiagu.util.AssetsUtil.writeFile(android.content.Context,java.lang.String,java.lang.String):35:54 -> attachBaseContext
-    15:34:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):29 -> attachBaseContext
-    15:34:void attachBaseContext(android.content.Context):17 -> attachBaseContext
-    35:48:void com.frezrik.jiagu.util.AssetsUtil.writeFile(android.content.Context,java.lang.String,java.lang.String):48:61 -> attachBaseContext
-    35:48:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):29 -> attachBaseContext
-    35:48:void attachBaseContext(android.content.Context):17 -> attachBaseContext
-    49:51:void attachBaseContext(android.content.Context):17:19 -> attachBaseContext
-    52:62:void com.frezrik.jiagu.util.AssetsUtil.writeFile(android.content.Context,java.lang.String,java.lang.String) -> attachBaseContext
-    52:62:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):29 -> attachBaseContext
-    52:62:void attachBaseContext(android.content.Context):17 -> attachBaseContext
+    1:3:void attachBaseContext(android.content.Context):17:19 -> attachBaseContext
+    4:14:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):17:27 -> attachBaseContext
+    4:14:void attachBaseContext(android.content.Context):21 -> attachBaseContext
+    15:45:void com.frezrik.jiagu.util.AssetsUtil.writeFile(android.content.Context,java.lang.String,java.lang.String):37:67 -> attachBaseContext
+    15:45:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):31 -> attachBaseContext
+    15:45:void attachBaseContext(android.content.Context):21 -> attachBaseContext
+    46:59:void com.frezrik.jiagu.util.AssetsUtil.writeFile(android.content.Context,java.lang.String,java.lang.String):61:74 -> attachBaseContext
+    46:59:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):31 -> attachBaseContext
+    46:59:void attachBaseContext(android.content.Context):21 -> attachBaseContext
+    60:62:void attachBaseContext(android.content.Context):21:23 -> attachBaseContext
+    63:73:void com.frezrik.jiagu.util.AssetsUtil.writeFile(android.content.Context,java.lang.String,java.lang.String):65:75 -> attachBaseContext
+    63:73:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):31 -> attachBaseContext
+    63:73:void attachBaseContext(android.content.Context):21 -> attachBaseContext
 com.frezrik.jiagu.util.ApplicationHook -> com.frezrik.jiagu.util.ApplicationHook:
     1:1:void <init>():17:17 -> <init>
     1:8:void replaceContentProvider(java.lang.Object,android.app.Application):112:119 -> a
