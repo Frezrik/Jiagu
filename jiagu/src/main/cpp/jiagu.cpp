@@ -272,7 +272,7 @@ static void loadDex(JNIEnv *env, jobject application, jbyteArray dexArray) {
     // 前512字节进行AES加密
     int tmp;
     int decryptdex_len = dexlen - shell_len - 16 - 4; // AES加密后数据长度会增加16字节，这里要去掉
-    char decryptdex[decryptdex_len];
+    char *decryptdex = (char *) malloc(decryptdex_len * sizeof(char));
     char *temp = tiny_aes_decrypt_cbc(reinterpret_cast<char *>(dexData + shell_len), 512 + 16, &tmp);
     memcpy(decryptdex, temp, tmp);
     memcpy(decryptdex + tmp, dexData + shell_len + 512 + 16, decryptdex_len - tmp);
@@ -307,7 +307,7 @@ static void loadDex(JNIEnv *env, jobject application, jbyteArray dexArray) {
         // dex2、dex3数据解密
         if (count != 0) {
             for (int i = 0; i < 112; i++) {
-                decryptdex[index + i] ^= 0x69;
+                decryptdex[index + i] ^= 0x66;
             }
         }
 
@@ -348,6 +348,7 @@ static void loadDex(JNIEnv *env, jobject application, jbyteArray dexArray) {
     jstring appname = env->NewStringUTF(app_name);
     hook_application(application, appname);
 
+    free(decryptdex);
     for (int i = 0; i < dexobjs.size(); i++) {
         env->DeleteLocalRef(dexobjs[i]);
     }
