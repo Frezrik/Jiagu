@@ -18,7 +18,7 @@ public class CmdUtils {
      * @throws IOException
      * @throws InterruptedException
      */
-    public static void exec(String tag, String[] cmd) throws IOException, InterruptedException {
+    public static void exec(String tag, String cmd) throws IOException, InterruptedException {
         Process process = Runtime.getRuntime().exec(cmd);
         Log.d("start " + tag);
         try {

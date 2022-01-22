@@ -20,10 +20,8 @@ public class SignUtils {
             throws InterruptedException, IOException {
         String path = unsignedApk.getAbsolutePath();
         String v1Name = path.substring(0, path.indexOf(".apk")) + "_v1.apk";
-        String cmd[] = {AppManager.BIN_RUNNER + "jarsigner", "-sigalg", "SHA1withRSA", "-digestalg",
-                "SHA1", "-keystore",
-                keyStore, "-storepass", keyPwd, "-keypass", alisaPwd, "-signedjar", v1Name,
-                unsignedApk.getAbsolutePath(), alias};
+        String cmd = AppManager.BIN_RUNNER + "jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore " + keyStore + " -storepass " + keyPwd +
+                " -keypass " + alisaPwd + " -signedjar " + v1Name + " " + unsignedApk.getAbsolutePath() + " " + alias;
 
         CmdUtils.exec("v1 sign", cmd);
 
@@ -35,7 +33,7 @@ public class SignUtils {
     // zipalign -p 4 input\app-release-unsigned.apk input\app-release-unsigned.apk
     private static String apkZipalign(String v1Apk) throws IOException, InterruptedException {
         String zipalignName = v1Apk.substring(0, v1Apk.indexOf(".apk")) + "_align.apk";
-        String cmd[] = {AppManager.BIN_RUNNER + AppManager.BIN_PATH + "zipalign", "-p", "4", v1Apk, zipalignName};
+        String cmd = AppManager.BIN_RUNNER  + AppManager.BIN_PATH + "zipalign -p 4 " + v1Apk + " " + zipalignName;
 
         CmdUtils.exec("zipalign", cmd);
 
@@ -44,16 +42,14 @@ public class SignUtils {
         return zipalignName;
     }
 
-    //apksigner.jar sign  --ks key.jks --ks-key-alias releasekey  --ks-pass pass:pp123456
+    //apksigner sign  --ks key.jks --ks-key-alias releasekey  --ks-pass pass:pp123456
     // --key-pass pass:pp123456  --out output.apk  input.apk
     public static void apkSignature(File unsignedApk, File signedApk, String keyStore,
                                     String keyPwd, String alias, String alisaPwd) throws IOException, InterruptedException {
         String v1Name = signature(unsignedApk, keyStore, keyPwd, alias, alisaPwd);
         String zipalignName = apkZipalign(v1Name);
-        String[] cmd = {AppManager.CMD_RUNNER, AppManager.BIN_PATH + "apksigner", "sign", "--ks", keyStore, "--ks-pass",
-                "pass:" + keyPwd,
-                "--ks-key-alias", alias, "--key-pass", "pass:" + alisaPwd,
-                "--out", signedApk.getAbsolutePath(), zipalignName};
+        String cmd = AppManager.CMD_RUNNER +  AppManager.BIN_PATH + "apksigner sign --ks " + keyStore + " --ks-pass pass:" + keyPwd
+                + " --ks-key-alias " + alias + " --key-pass pass:" + alisaPwd + " --out " + signedApk.getAbsolutePath() + " " + zipalignName;
 
         CmdUtils.exec("v2 sign", cmd);
 

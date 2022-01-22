@@ -22,12 +22,12 @@ public class AppManager {
     /**
      * 当前系统对应command执行
      */
-    public static final String CMD_RUNNER = IS_WIN ? "cmd.exe /C"  : "sh";
+    public static final String CMD_RUNNER = IS_WIN ? "cmd.exe /C " : "sh -c ";
 
     /**
      * 当前系统对应二进制执行
      */
-    public static final String BIN_RUNNER = IS_WIN ? "cmd.exe /C "  : "";
+    public static final String BIN_RUNNER = IS_WIN ? "cmd.exe /C " : "";
 
     /**
      * 待加固应用
