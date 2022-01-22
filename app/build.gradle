@@ -18,10 +18,10 @@ android {
 
     signingConfigs {
         test {
-            keyAlias 'test'
-            keyPassword 'test123'
-            storeFile file('../keystore/test.jks')
-            storePassword 'test123'
+            keyAlias 'jiagu'
+            keyPassword 'test111'
+            storeFile file(getRootDir().absolutePath + '/keystore/testkey.jks')
+            storePassword 'test111'
         }
     }
 

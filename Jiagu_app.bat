@@ -1,7 +1,7 @@
 @echo off
 
-echo ===^> clean...
-call gradlew clean >NUL 2>&1
+echo ===^> app clean...
+call gradlew app:clean >NUL 2>&1
 
 echo ===^> build app...
 call gradlew app:assembleRelease >NUL 2>&1
