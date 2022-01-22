@@ -22,7 +22,7 @@ public class AppManager {
     /**
      * 当前系统对应command执行
      */
-    public static final String CMD_RUNNER = IS_WIN ? "cmd.exe /C " : "sh -c ";
+    public static final String CMD_RUNNER = IS_WIN ? "cmd.exe /C " : "sh ";
 
     /**
      * 当前系统对应二进制执行
