@@ -16,8 +16,7 @@ public class DexUtils {
     }
 
     public static void dxCommand(File jar, File dex) throws IOException, InterruptedException {
-        String[] cmd = {AppManager.CMD_RUNNER, AppManager.BIN_PATH + "dx", "--dex", "--output=" + dex.getAbsolutePath(),
-                jar.getAbsolutePath()};
+        String cmd = AppManager.CMD_RUNNER + AppManager.BIN_PATH + "dx --dex --output=" + dex.getAbsolutePath() + " " + jar.getAbsolutePath();
         CmdUtils.exec("dx", cmd);
     }
 
