@@ -1,6 +1,7 @@
 package com.frezrik.jiagu.pack.core;
 
 import java.io.File;
+import java.util.Locale;
 
 public class AppManager {
     /**
@@ -12,6 +13,21 @@ public class AppManager {
      * 获取运行时目录
      */
     public static final String RUNTIME_PATH = ProjectManager.getRuntimeDir().getAbsolutePath() + File.separator;
+
+    /**
+     * 当前是否是Windows系统
+     */
+    public static final boolean IS_WIN = System.getProperty("os.name").toLowerCase(Locale.getDefault()).contains("win");
+
+    /**
+     * 当前系统对应command执行
+     */
+    public static final String CMD_RUNNER = IS_WIN ? "cmd.exe /C"  : "sh";
+
+    /**
+     * 当前系统对应二进制执行
+     */
+    public static final String BIN_RUNNER = IS_WIN ? "cmd.exe /C "  : "";
 
     /**
      * 待加固应用
@@ -26,12 +42,17 @@ public class AppManager {
     /**
      * 执行依赖文件路径
      */
-    public static final String BIN_PATH = RUNTIME_PATH + "bin/";
+    public static final String BIN_PATH = RUNTIME_PATH + "bin/" + (IS_WIN ? "win/" : "linux/");
 
     /**
      * 壳DEX路径
      */
-    public static final String DEX_PATH = BIN_PATH + "classes.dex";
+    public static final String DEX_PATH = RUNTIME_PATH + "bin/classes.dex";
+
+    /**
+     * 加固SO路径
+     */
+    public static final String SO_PATH = RUNTIME_PATH + "bin/jni/";
 
     /************ 临时文件 *************/
     // 解压路径

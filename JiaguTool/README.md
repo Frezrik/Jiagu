@@ -1,5 +1,5 @@
 ## 使用说明
-* 将要加固的应用放到input文件夹，执行脚本Jiagu_input.bat进行加固，加固后的应用将输出到output文件夹
+* 将要加固的应用放到input文件夹，执行脚本Jiagu_input进行加固，加固后的应用将输出到output文件夹
 
 ## keystore替换
 * 1.如果需要修改keystore，可以替换keystore文件夹的test.jks文件

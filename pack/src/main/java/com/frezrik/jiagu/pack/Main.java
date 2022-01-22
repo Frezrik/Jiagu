@@ -215,7 +215,7 @@ public class Main {
         if (new File(AppManager.TEST_SO).exists()) {
             so_path = AppManager.TEST_SO;
         } else {
-            so_path = AppManager.BIN_PATH;
+            so_path = AppManager.SO_PATH;
         }
         File so = new File(so_path + "armeabi-v7a/libjiagu.so");
         File so_64 = new File(so_path + "arm64-v8a/libjiagu.so");
