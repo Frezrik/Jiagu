@@ -8,6 +8,6 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("frezrik", "MyApp onCreate");
+        Log.d("NDK_JIAGU", "MyApp onCreate ==> " + getApplicationContext().getClass().getName());
     }
 }
