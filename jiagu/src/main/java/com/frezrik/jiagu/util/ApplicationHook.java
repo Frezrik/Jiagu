@@ -4,11 +4,9 @@ import android.app.Application;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map;
@@ -28,7 +26,6 @@ public class ApplicationHook {
         }
 
         Log.w("NDK_JIAGU", "hook");
-        compatible28();
         try {
             // 先获取到ContextImpl对象
             Context contextImpl = application.getBaseContext();
@@ -103,6 +100,7 @@ public class ApplicationHook {
      * 修改已经存在ContentProvider中application
      *
      * @param application
+     *
      * @return
      */
     public static Application replaceContentProvider(Application application) {
@@ -151,18 +149,6 @@ public class ApplicationHook {
         } catch (Exception e) {
         }
         return null;
-    }
-
-    private static void compatible28() {
-        if (Build.VERSION.SDK_INT == 28) {
-            try {
-                Class.forName("android.content.pm.PackageParser$Package").getDeclaredConstructor(String.class).setAccessible(true);
-                Reflect.invokeMethod(Class.forName("android.app.ActivityThread"), currentActivityThread(),
-                        new Object[]{true}, "mHiddenApiWarningShown",
-                        Boolean.class);
-            } catch (Exception e) {
-            }
-        }
     }
 
 }
