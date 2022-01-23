@@ -252,7 +252,7 @@ static void make_dex_elements(JNIEnv *env, jobject classLoader, std::vector<jobj
 
 static void hook_application(jobject app, jstring name) {
     CallStaticMethod("com/frezrik/jiagu/util/ApplicationHook", "hook",
-                     "(Landroid/app/Application;Ljava/lang/String;)Landroid/app/Application;", app, name);
+                     "(Landroid/app/Application;Ljava/lang/String;)V", app, name);
 }
 
 /**

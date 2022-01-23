@@ -2,8 +2,9 @@ package com.frezrik.jiagu;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
+import android.content.pm.PackageManager;
 
+import com.frezrik.jiagu.util.ApplicationHook;
 import com.frezrik.jiagu.util.AssetsUtil;
 
 public class StubApp extends Application {
@@ -16,11 +17,26 @@ public class StubApp extends Application {
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(context);
 
-        Log.d("NDK_JIAGU", "StubApp attachBaseContext");
-
         System.load(AssetsUtil.copyJiagu(context));
 
         attach(this);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        ApplicationHook.replaceApplicationContext(this);
+    }
+
+    @Override
+    public String getPackageName() {
+        return "JIAGU"; // 如果有ContentProvider，修改getPackageName后会重走createPackageContext
+    }
+
+    @Override
+    public Context createPackageContext(String packageName, int flags) throws PackageManager.NameNotFoundException {
+        return ApplicationHook.replaceContentProvider(this);
     }
 
     public native static void attach(StubApp base);
