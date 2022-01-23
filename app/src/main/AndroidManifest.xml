@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Jiagu">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,6 +18,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".TestBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_CHANGED" />
+                <action android:name="android.hardware.usb.action.USB_STATE"/>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".TestService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.frezrik.jiagu.testService" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name=".TestContentProvider"
+            android:authorities="com.frezrik.jiagu.TestContentProvider"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
