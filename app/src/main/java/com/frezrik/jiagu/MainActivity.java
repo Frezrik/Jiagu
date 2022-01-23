@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(stringFromJNI());
 
         mIntent = new Intent("com.frezrik.jiagu.testService");
-
+        mIntent.setPackage(getPackageName());
         startService(mIntent);
     }
 
