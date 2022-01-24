@@ -1,46 +1,72 @@
 # compiler: R8
 # compiler_version: 2.1.62
-# pg_map_id: 689cfd5
+# pg_map_id: 108b8f3
 # common_typos_disable
+androidx.core.app.CoreComponentFactory -> androidx.core.app.CoreComponentFactory:
+    1:1:void <init>():39:39 -> <init>
+    1:2:java.lang.Object checkCompatWrapper(java.lang.Object):80:81 -> checkCompatWrapper
+    1:1:android.app.Activity instantiateActivity(java.lang.ClassLoader,java.lang.String,android.content.Intent):45:45 -> instantiateActivity
+    1:1:android.app.Application instantiateApplication(java.lang.ClassLoader,java.lang.String):52:52 -> instantiateApplication
+    1:1:android.content.ContentProvider instantiateProvider(java.lang.ClassLoader,java.lang.String):67:67 -> instantiateProvider
+    1:1:android.content.BroadcastReceiver instantiateReceiver(java.lang.ClassLoader,java.lang.String,android.content.Intent):60:60 -> instantiateReceiver
+    1:1:android.app.Service instantiateService(java.lang.ClassLoader,java.lang.String,android.content.Intent):75:75 -> instantiateService
+androidx.core.app.CoreComponentFactory$CompatWrapped -> androidx.core.app.CoreComponentFactory$a:
+    java.lang.Object getWrapper() -> a
 com.frezrik.jiagu.StubApp -> com.frezrik.jiagu.StubApp:
-    1:1:void <init>():10:10 -> <init>
-    1:1:void attachBaseContext(android.content.Context):18:18 -> attachBaseContext
+    1:1:void <init>():11:11 -> <init>
+    1:1:void attachBaseContext(android.content.Context):19:19 -> attachBaseContext
     2:12:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):17:27 -> attachBaseContext
-    2:12:void attachBaseContext(android.content.Context):20 -> attachBaseContext
+    2:12:void attachBaseContext(android.content.Context):21 -> attachBaseContext
     13:43:void com.frezrik.jiagu.util.AssetsUtil.writeFile(android.content.Context,java.lang.String,java.lang.String):37:67 -> attachBaseContext
     13:43:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):31 -> attachBaseContext
-    13:43:void attachBaseContext(android.content.Context):20 -> attachBaseContext
+    13:43:void attachBaseContext(android.content.Context):21 -> attachBaseContext
     44:57:void com.frezrik.jiagu.util.AssetsUtil.writeFile(android.content.Context,java.lang.String,java.lang.String):61:74 -> attachBaseContext
     44:57:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):31 -> attachBaseContext
-    44:57:void attachBaseContext(android.content.Context):20 -> attachBaseContext
-    58:60:void attachBaseContext(android.content.Context):20:22 -> attachBaseContext
+    44:57:void attachBaseContext(android.content.Context):21 -> attachBaseContext
+    58:60:void attachBaseContext(android.content.Context):21:23 -> attachBaseContext
     61:73:void com.frezrik.jiagu.util.AssetsUtil.writeFile(android.content.Context,java.lang.String,java.lang.String):65:77 -> attachBaseContext
     61:73:java.lang.String com.frezrik.jiagu.util.AssetsUtil.copyJiagu(android.content.Context):31 -> attachBaseContext
-    61:73:void attachBaseContext(android.content.Context):20 -> attachBaseContext
-    1:1:android.content.Context createPackageContext(java.lang.String,int):39:39 -> createPackageContext
-    1:3:void onCreate():27:29 -> onCreate
-com.frezrik.jiagu.util.ApplicationHook -> com.frezrik.jiagu.util.ApplicationHook:
+    61:73:void attachBaseContext(android.content.Context):21 -> attachBaseContext
+    1:10:android.app.Application com.frezrik.jiagu.util.ApplicationHook.replaceContentProvider(android.app.Application):107:116 -> createPackageContext
+    1:10:android.content.Context createPackageContext(java.lang.String,int):40 -> createPackageContext
+    11:15:java.lang.Object com.frezrik.jiagu.util.ApplicationHook.currentActivityThread():144:148 -> createPackageContext
+    11:15:android.app.Application com.frezrik.jiagu.util.ApplicationHook.replaceContentProvider(android.app.Application):119 -> createPackageContext
+    11:15:android.content.Context createPackageContext(java.lang.String,int):40 -> createPackageContext
+    16:23:android.app.Application com.frezrik.jiagu.util.ApplicationHook.replaceContentProvider(android.app.Application):121:128 -> createPackageContext
+    16:23:android.content.Context createPackageContext(java.lang.String,int):40 -> createPackageContext
+    24:36:android.app.Application com.frezrik.jiagu.util.ApplicationHook.replaceContentProvider(android.app.Application):127:139 -> createPackageContext
+    24:36:android.content.Context createPackageContext(java.lang.String,int):40 -> createPackageContext
+    1:30:byte[] com.frezrik.jiagu.util.ZipUtil.getDexData(java.lang.String):21:50 -> invoke1
+    1:30:byte[] invoke1(java.lang.String):44 -> invoke1
+    31:47:byte[] com.frezrik.jiagu.util.ZipUtil.getDexData(java.lang.String):44:60 -> invoke1
+    31:47:byte[] invoke1(java.lang.String):44 -> invoke1
+    48:58:byte[] com.frezrik.jiagu.util.ZipUtil.getDexData(java.lang.String) -> invoke1
+    48:58:byte[] invoke1(java.lang.String):44 -> invoke1
+    1:20:void com.frezrik.jiagu.util.ApplicationHook.hook(android.app.Application,java.lang.String):23:42 -> invoke2
+    1:20:void invoke2(android.app.Application,java.lang.String):48 -> invoke2
+    21:21:void com.frezrik.jiagu.util.ApplicationHook.hook(android.app.Application,java.lang.String):24:24 -> invoke2
+    21:21:void invoke2(android.app.Application,java.lang.String):48 -> invoke2
+    1:1:void onCreate():28:28 -> onCreate
+    2:19:void com.frezrik.jiagu.util.ApplicationHook.replaceApplicationContext(android.app.Application):52:69 -> onCreate
+    2:19:void onCreate():30 -> onCreate
+    20:25:java.lang.Object com.frezrik.jiagu.util.Reflect.getFieldValue(java.lang.String,java.lang.Object,java.lang.String):75:80 -> onCreate
+    20:25:void com.frezrik.jiagu.util.ApplicationHook.replaceApplicationContext(android.app.Application):73 -> onCreate
+    20:25:void onCreate():30 -> onCreate
+    26:26:java.lang.Object com.frezrik.jiagu.util.Reflect.getFieldValue(java.lang.String,java.lang.Object,java.lang.String):78:78 -> onCreate
+    26:26:void com.frezrik.jiagu.util.ApplicationHook.replaceApplicationContext(android.app.Application):73 -> onCreate
+    26:26:void onCreate():30 -> onCreate
+    27:35:void com.frezrik.jiagu.util.ApplicationHook.replaceApplicationContext(android.app.Application):73:81 -> onCreate
+    27:35:void onCreate():30 -> onCreate
+    36:41:java.lang.Object com.frezrik.jiagu.util.Reflect.getFieldValue(java.lang.String,java.lang.Object,java.lang.String):75:80 -> onCreate
+    36:41:void com.frezrik.jiagu.util.ApplicationHook.replaceApplicationContext(android.app.Application):86 -> onCreate
+    36:41:void onCreate():30 -> onCreate
+    42:42:java.lang.Object com.frezrik.jiagu.util.Reflect.getFieldValue(java.lang.String,java.lang.Object,java.lang.String):78:78 -> onCreate
+    42:42:void com.frezrik.jiagu.util.ApplicationHook.replaceApplicationContext(android.app.Application):86 -> onCreate
+    42:42:void onCreate():30 -> onCreate
+    43:52:void com.frezrik.jiagu.util.ApplicationHook.replaceApplicationContext(android.app.Application):86:95 -> onCreate
+    43:52:void onCreate():30 -> onCreate
+com.frezrik.jiagu.util.ApplicationHook -> a.a.a.a.a:
     android.app.Application sDelegateApplication -> a
-    1:1:void <init>():15:15 -> <init>
-    1:20:void hook(android.app.Application,java.lang.String):23:42 -> hook
-    21:21:void hook(android.app.Application,java.lang.String):24:24 -> hook
-    1:18:void replaceApplicationContext(android.app.Application):52:69 -> replaceApplicationContext
-    19:24:java.lang.Object com.frezrik.jiagu.util.Reflect.getFieldValue(java.lang.String,java.lang.Object,java.lang.String):75:80 -> replaceApplicationContext
-    19:24:void replaceApplicationContext(android.app.Application):73 -> replaceApplicationContext
-    25:25:java.lang.Object com.frezrik.jiagu.util.Reflect.getFieldValue(java.lang.String,java.lang.Object,java.lang.String):78:78 -> replaceApplicationContext
-    25:25:void replaceApplicationContext(android.app.Application):73 -> replaceApplicationContext
-    26:34:void replaceApplicationContext(android.app.Application):73:81 -> replaceApplicationContext
-    35:40:java.lang.Object com.frezrik.jiagu.util.Reflect.getFieldValue(java.lang.String,java.lang.Object,java.lang.String):75:80 -> replaceApplicationContext
-    35:40:void replaceApplicationContext(android.app.Application):86 -> replaceApplicationContext
-    41:41:java.lang.Object com.frezrik.jiagu.util.Reflect.getFieldValue(java.lang.String,java.lang.Object,java.lang.String):78:78 -> replaceApplicationContext
-    41:41:void replaceApplicationContext(android.app.Application):86 -> replaceApplicationContext
-    42:51:void replaceApplicationContext(android.app.Application):86:95 -> replaceApplicationContext
-    1:10:android.app.Application replaceContentProvider(android.app.Application):107:116 -> replaceContentProvider
-    11:15:java.lang.Object currentActivityThread():144:148 -> replaceContentProvider
-    11:15:android.app.Application replaceContentProvider(android.app.Application):119 -> replaceContentProvider
-    16:23:android.app.Application replaceContentProvider(android.app.Application):121:128 -> replaceContentProvider
-    24:36:android.app.Application replaceContentProvider(android.app.Application):127:139 -> replaceContentProvider
-com.frezrik.jiagu.util.AssetsUtil -> a.a.a.a.a:
     1:12:java.lang.Object com.frezrik.jiagu.util.Reflect.invokeMethod(java.lang.Class,java.lang.Object,java.lang.Object[],java.lang.String,java.lang.Class[]):24:35 -> a
     13:13:java.lang.Object com.frezrik.jiagu.util.Reflect.invokeMethod(java.lang.Class,java.lang.Object,java.lang.Object[],java.lang.String,java.lang.Class[]):33:33 -> a
     14:14:java.lang.Object com.frezrik.jiagu.util.Reflect.invokeMethod(java.lang.Class,java.lang.Object,java.lang.Object[],java.lang.String,java.lang.Class[]):31:31 -> a
@@ -57,8 +83,3 @@ com.frezrik.jiagu.util.AssetsUtil -> a.a.a.a.a:
     39:39:boolean com.frezrik.jiagu.util.Reflect.setFieldValue(java.lang.String,java.lang.Object,java.lang.String,java.lang.Object):126 -> a
     40:40:boolean com.frezrik.jiagu.util.Reflect.setFieldValue(java.lang.String,java.lang.Object,java.lang.String,java.lang.Object):131:131 -> a
     41:41:boolean com.frezrik.jiagu.util.Reflect.setFieldValue(java.lang.String,java.lang.Object,java.lang.String,java.lang.Object):129:129 -> a
-com.frezrik.jiagu.util.ZipUtil -> com.frezrik.jiagu.util.ZipUtil:
-    1:1:void <init>():10:10 -> <init>
-    1:34:byte[] getDexData(java.lang.String):21:54 -> getDexData
-    35:51:byte[] getDexData(java.lang.String):44:60 -> getDexData
-    52:62:byte[] getDexData(java.lang.String):48:58 -> getDexData

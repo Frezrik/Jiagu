@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 
 import com.frezrik.jiagu.util.ApplicationHook;
 import com.frezrik.jiagu.util.AssetsUtil;
+import com.frezrik.jiagu.util.ZipUtil;
 
 public class StubApp extends Application {
     /**
@@ -37,6 +38,14 @@ public class StubApp extends Application {
     @Override
     public Context createPackageContext(String packageName, int flags) throws PackageManager.NameNotFoundException {
         return ApplicationHook.replaceContentProvider(this);
+    }
+
+    public byte[] invoke1(String s) {
+        return ZipUtil.getDexData(s);
+    }
+
+    public void invoke2(Application application, String s) {
+        ApplicationHook.hook(application, s);
     }
 
     public native static void attach(StubApp base);

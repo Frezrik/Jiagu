@@ -98,10 +98,6 @@
 }
 
 #4.app
--keep class com.frezrik.jiagu.util.ApplicationHook {
-    public <methods>;
-}
-
--keep class com.frezrik.jiagu.util.ZipUtil {
+-keep class com.frezrik.jiagu.StubApp {
     public <methods>;
 }

@@ -117,9 +117,9 @@ static jbyteArray getDex(JNIEnv *env, jobject application) {
     jstring sourceDir = static_cast<jstring>(GetField(appInfo, "sourceDir",
                                                       "Ljava/lang/String;").l);
     // 获取dex数据
-    jbyteArray dexArray = static_cast<jbyteArray>(CallStaticMethod(
-            "com/frezrik/jiagu/util/ZipUtil", "getDexData", "(Ljava/lang/String;)[B",
-            sourceDir).l);
+    jbyteArray dexArray = static_cast<jbyteArray>(CallObjectMethod(application, "invoke1",
+                                                                   "(Ljava/lang/String;)[B",
+                                                                   sourceDir).l);
 
     env->DeleteLocalRef(appInfo);
     env->DeleteLocalRef(sourceDir);
@@ -251,8 +251,7 @@ static void make_dex_elements(JNIEnv *env, jobject classLoader, std::vector<jobj
 }
 
 static void hook_application(jobject app, jstring name) {
-    CallStaticMethod("com/frezrik/jiagu/util/ApplicationHook", "hook",
-                     "(Landroid/app/Application;Ljava/lang/String;)V", app, name);
+    CallObjectMethod(app,  "invoke2", "(Landroid/app/Application;Ljava/lang/String;)V", app, name);
 }
 
 /**
