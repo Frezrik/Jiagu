@@ -129,7 +129,7 @@ public class ZipUtil {
 		}
 
 		ZipEntry entry = new ZipEntry(buffer.toString().substring(1));
-		if ("resources.arsc".equals(file.getName())) {
+		if ("resources.arsc".equals(file.getName()) || file.getAbsolutePath().contains(File.separator + "raw" + File.separator)) {
 			entry.setMethod(ZipEntry.STORED);
 			entry.setSize(file.length());
 			entry.setCrc(calFileCRC32(file));

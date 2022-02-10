@@ -1,6 +1,7 @@
 package com.frezrik.jiagu;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
         mIntent = new Intent("com.frezrik.jiagu.testService");
         mIntent.setPackage(getPackageName());
         startService(mIntent);
+
+        MediaPlayer.create(this, R.raw.beep).start();
+
     }
 
     @Override
