@@ -296,6 +296,7 @@ static void loadDex(JNIEnv *env, jobject application, jbyteArray dexArray) {
     jobject classLoader = CallObjectMethod(g_context, "getClassLoader", "()Ljava/lang/ClassLoader;").l;
 
     std::vector<jobject> dexobjs;
+    std::vector<jobject> dexBuffers;
 
     int index = 1 + app_len, count = 0;
     while (index < decryptdex_len) {
@@ -318,38 +319,57 @@ static void loadDex(JNIEnv *env, jobject application, jbyteArray dexArray) {
 
         } else {
             jobject dexBuffer = env->NewDirectByteBuffer(decryptdex + index, dexLength);
-            jclass InMemoryDexClassLoaderClass = env->FindClass("dalvik/system/InMemoryDexClassLoader");
-            jmethodID InMemoryDexClassLoaderInit = env->GetMethodID(InMemoryDexClassLoaderClass, "<init>",
-                                                                    "(Ljava/nio/ByteBuffer;Ljava/lang/ClassLoader;)V");
-            jobject InMemoryObj = env->NewObject(InMemoryDexClassLoaderClass, InMemoryDexClassLoaderInit, dexBuffer, classLoader);
-            jobject pathListObj = GetField(InMemoryObj, "pathList", "Ldalvik/system/DexPathList;").l;
-
-            jobjectArray dexElement = static_cast<jobjectArray>(GetField(pathListObj, "dexElements", "[Ldalvik/system/DexPathList$Element;").l);
-            for (int i = 0; i < env->GetArrayLength(dexElement); i++) {
-                dexobjs.push_back(env->GetObjectArrayElement(dexElement, i));
-            }
-
-            env->DeleteLocalRef(dexBuffer);
-            env->DeleteLocalRef(InMemoryDexClassLoaderClass);
-            env->DeleteLocalRef(InMemoryObj);
-            env->DeleteLocalRef(pathListObj);
+            dexBuffers.push_back(dexBuffer);
         }
 
         index += dexLength;
         count++;
     }
+
+    jstring appname = env->NewStringUTF(app_name);
     if (g_sdk_int < 26) {
         ndk_dlclose(art_handle);
+    } else {
+        jclass ElementClass = env->FindClass("java/nio/ByteBuffer");
+        jobjectArray dexBufferArr = env->NewObjectArray(dexBuffers.size(), ElementClass, NULL);
+        for (int i = 0; i < dexBuffers.size(); i++) {
+            env->SetObjectArrayElement(dexBufferArr, i, dexBuffers[i]);
+        }
+
+        jclass InMemoryDexClassLoaderClass = env->FindClass("dalvik/system/InMemoryDexClassLoader");
+        jmethodID InMemoryDexClassLoaderInit = env->GetMethodID(InMemoryDexClassLoaderClass, "<init>",
+                                                                "([Ljava/nio/ByteBuffer;Ljava/lang/ClassLoader;)V");
+        jobject InMemoryObj = env->NewObject(InMemoryDexClassLoaderClass, InMemoryDexClassLoaderInit, dexBufferArr, classLoader);
+        jobject pathListObj = GetField(InMemoryObj, "pathList", "Ldalvik/system/DexPathList;").l;
+        jobjectArray dexElements;
+        if (g_sdk_int >= 29) {
+            jclass list_jcs = env->FindClass("java/util/ArrayList");
+            jmethodID list_init = env->GetMethodID(list_jcs, "<init>", "()V");
+            jobject list_obj = env->NewObject(list_jcs, list_init);
+            dexElements = static_cast<jobjectArray>(CallStaticMethod("dalvik/system/DexPathList", "makeInMemoryDexElements", "([Ljava/nio/ByteBuffer;Ljava/util/List;)[Ldalvik/system/DexPathList$Element;", dexBufferArr, list_obj).l);
+        } else {
+            dexElements = static_cast<jobjectArray>(GetField(pathListObj, "dexElements", "[Ldalvik/system/DexPathList$Element;").l);
+        }
+
+        for (int i = 0; i < env->GetArrayLength(dexElements); i++) {
+            dexobjs.push_back(env->GetObjectArrayElement(dexElements, i));
+        }
+
+        env->DeleteLocalRef(ElementClass);
+        env->DeleteLocalRef(InMemoryDexClassLoaderClass);
+        env->DeleteLocalRef(InMemoryObj);
+        env->DeleteLocalRef(pathListObj);
     }
 
     make_dex_elements(env, classLoader, dexobjs);
-
-    jstring appname = env->NewStringUTF(app_name);
     hook_application(application, appname);
 
     free(decryptdex);
     for (int i = 0; i < dexobjs.size(); i++) {
         env->DeleteLocalRef(dexobjs[i]);
+    }
+    for (int i = 0; i < dexBuffers.size(); i++) {
+        env->DeleteLocalRef(dexBuffers[i]);
     }
     env->DeleteLocalRef(classLoader);
     env->DeleteLocalRef(appname);
