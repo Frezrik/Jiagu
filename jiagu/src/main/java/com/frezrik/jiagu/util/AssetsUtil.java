@@ -2,6 +2,7 @@ package com.frezrik.jiagu.util;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import com.frezrik.jiagu.StubApp;
 
@@ -26,7 +27,11 @@ public class AssetsUtil {
 
         if ("x86".equals(Build.CPU_ABI)) {
             soName = "libjiagu_x86.so";
+        } else if ("x86_64".equals(Build.CPU_ABI)) {
+            soName = "libjiagu_x68_64.so";
         }
+
+        Log.w("NDK_JIAGU", "soName:" + soName);
 
         writeFile(context, soName, destSo);
 

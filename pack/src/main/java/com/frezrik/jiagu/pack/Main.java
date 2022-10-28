@@ -220,10 +220,12 @@ public class Main {
         File so = new File(so_path + "armeabi-v7a/libjiagu.so");
         File so_64 = new File(so_path + "arm64-v8a/libjiagu.so");
         File so_x86 = new File(so_path + "x86/libjiagu.so");
+        File so_x86_64 = new File(so_path + "x86_64/libjiagu.so");
 
         FileUtils.copy(so, new File(assetsDir, "libjiagu.so"));
         FileUtils.copy(so_64, new File(assetsDir, "libjiagu_64.so"));
         FileUtils.copy(so_x86, new File(assetsDir, "libjiagu_x86.so"));
+        FileUtils.copy(so_x86_64, new File(assetsDir, "libjiagu_x86_64.so"));
 
         // *************** 5.打包APK *********************/
         Log.d("打包APK");
