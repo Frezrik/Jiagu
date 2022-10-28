@@ -129,7 +129,7 @@ public class ZipUtil {
 		}
 
 		ZipEntry entry = new ZipEntry(buffer.toString().substring(1));
-		if ("resources.arsc".equals(file.getName()) || file.getAbsolutePath().contains(File.separator + "raw" + File.separator)) {
+		if ("resources.arsc".equals(file.getName()) || isInRaw(file)) {
 			entry.setMethod(ZipEntry.STORED);
 			entry.setSize(file.length());
 			entry.setCrc(calFileCRC32(file));
@@ -143,6 +143,22 @@ public class ZipUtil {
 		}
 		bis.close();
 		zos.closeEntry();
+	}
+
+	/**
+	 * raw下的文件，打包时不能压缩
+	 * @param file
+	 * @return
+	 */
+	private static boolean isInRaw(File file) {
+		if (file.getAbsolutePath().contains(File.separator + "raw" + File.separator))
+			return true;
+
+		// 对于资源混淆后的apk，这里的处理方式不太好
+		if (file.getAbsolutePath().endsWith(".ogg"))
+			return true;
+
+		return false;
 	}
 	
 	private static long calFileCRC32(File file) throws IOException {
