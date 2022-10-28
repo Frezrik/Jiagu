@@ -89,6 +89,7 @@ lint/tmp/
 output/
 JiaguTool/output/
 /pack.jar
+proguardMapping.txt
 
 # test
 test app/
