@@ -1,12 +1,16 @@
 package com.frezrik.jiagu.pack.util;
 
+import com.frezrik.jiagu.pack.core.Log;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.CRC32;
 import java.util.zip.CheckedInputStream;
 import java.util.zip.CheckedOutputStream;
@@ -16,7 +20,8 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipUtil {
 
-	public static void unZip(File zip, File dir) {
+	public static List<String> unZip(File zip, File dir) {
+		List<String> rawPathList = new ArrayList<>();
 		try {
 			dir.delete();
 			ZipFile zipFile = new ZipFile(zip);
@@ -32,6 +37,10 @@ public class ZipUtil {
 					File file = new File(dir, name);
 					if (!file.getParentFile().exists())
 						file.getParentFile().mkdirs();
+					if (zipEntry.getCompressedSize() == zipEntry.getSize()) {
+						String rawPath = file.getAbsolutePath();
+						rawPathList.add(rawPath.substring(rawPath.indexOf("unzip")));
+					}
 					FileOutputStream fos = new FileOutputStream(file);
 					InputStream is = zipFile.getInputStream(zipEntry);
 					byte[] buffer = new byte[1024];
@@ -47,19 +56,22 @@ public class ZipUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		return rawPathList;
 	}
 
 	/**
 	 * 打包apk
 	 * @param dir apk解压后的文件夹路径
 	 * @param zip 输出打包后的apk
+	 * @param rawPathList 不压缩的文件
 	 * @throws Exception
 	 */
-	public static void zip(File dir, File zip) throws Exception {
+	public static void zip(File dir, File zip, List<String> rawPathList) throws Exception {
 		zip.delete();
 		CheckedOutputStream cos = new CheckedOutputStream(new FileOutputStream(zip), new CRC32());
 		ZipOutputStream zos = new ZipOutputStream(cos);
-		compress(dir, zos, "");
+		compress(dir, zos, "", rawPathList);
 		zos.flush();
 		zos.close();
 	}
@@ -90,15 +102,17 @@ public class ZipUtil {
 		}
 	}
 
-	private static void compress(File srcFile, ZipOutputStream zos, String basePath) throws Exception {
+	private static void compress(File srcFile, ZipOutputStream zos, String basePath,
+								 List<String> rawPathList) throws Exception {
 		if (srcFile.isDirectory()) {
-			compressDir(srcFile, zos, basePath);
+			compressDir(srcFile, zos, basePath, rawPathList);
 		} else {
-			compressFile(srcFile, zos, basePath);
+			compressFile(srcFile, zos, basePath, rawPathList);
 		}
 	}
 
-	private static void compressDir(File dir, ZipOutputStream zos, String basePath) throws Exception {
+	private static void compressDir(File dir, ZipOutputStream zos, String basePath,
+									List<String> rawPathList) throws Exception {
 		File[] files = dir.listFiles();
 		if (files.length < 1) {
 			ZipEntry entry = new ZipEntry(basePath + dir.getName() + "/");
@@ -106,11 +120,12 @@ public class ZipUtil {
 			zos.closeEntry();
 		}
 		for (File file : files) {
-			compress(file, zos, basePath + dir.getName() + "/");
+			compress(file, zos, basePath + dir.getName() + "/", rawPathList);
 		}
 	}
 
-	private static void compressFile(File file, ZipOutputStream zos, String dir) throws Exception {
+	private static void compressFile(File file, ZipOutputStream zos, String dir,
+									 List<String> rawPathList) throws Exception {
 
 		String dirName = dir + file.getName();
 
@@ -129,7 +144,10 @@ public class ZipUtil {
 		}
 
 		ZipEntry entry = new ZipEntry(buffer.toString().substring(1));
-		if ("resources.arsc".equals(file.getName()) || isInRaw(file)) {
+		String rawPath = file.getAbsolutePath();
+		if (rawPathList.contains(rawPath.substring(rawPath.indexOf("unzip")))) { // 打包时不能压缩
+			Log.d("raw:   " + rawPath);
+
 			entry.setMethod(ZipEntry.STORED);
 			entry.setSize(file.length());
 			entry.setCrc(calFileCRC32(file));
@@ -145,22 +163,6 @@ public class ZipUtil {
 		zos.closeEntry();
 	}
 
-	/**
-	 * raw下的文件，打包时不能压缩
-	 * @param file
-	 * @return
-	 */
-	private static boolean isInRaw(File file) {
-		if (file.getAbsolutePath().contains(File.separator + "raw" + File.separator))
-			return true;
-
-		// 对于资源混淆后的apk，这里的处理方式不太好
-		if (file.getAbsolutePath().endsWith(".ogg"))
-			return true;
-
-		return false;
-	}
-	
 	private static long calFileCRC32(File file) throws IOException {
 		FileInputStream fi = new FileInputStream(file);
 		CheckedInputStream checksum = new CheckedInputStream(fi, new CRC32());

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class Main {
     //java -jar pack.jar -apk test.apk -key keystore/test.jks -kp test123 -alias test -ap test123
@@ -101,7 +102,7 @@ public class Main {
             apkUnzipDir.mkdirs();
         }
         // 解压APK
-        ZipUtil.unZip(apkFile, apkUnzipDir);
+        List<String> rawPathList = ZipUtil.unZip(apkFile, apkUnzipDir);
         // 删除META-INF/CERT.RSA,META-INF/CERT.SF,META-INF/MANIFEST.MF
         FileUtils.delete("/META-INF/CERT.RSA");
         FileUtils.delete("/META-INF/CERT.SF");
@@ -231,7 +232,7 @@ public class Main {
         Log.d("打包APK");
         File unsignedApk = new File("output/unsigned.apk");
         try {
-            ZipUtil.zip(apkUnzipDir, unsignedApk);
+            ZipUtil.zip(apkUnzipDir, unsignedApk, rawPathList);
         } catch (Exception e) {
             e.printStackTrace();
         }

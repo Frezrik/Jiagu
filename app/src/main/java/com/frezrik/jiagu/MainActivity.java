@@ -2,6 +2,7 @@ package com.frezrik.jiagu;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -20,7 +21,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("JIAGU_TEST", "onCreate[Activity] ==> " + getApplicationContext().getClass().getName());
 
         TextView tv = findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+        tv.setText(stringFromJNI()
+                + "\nBuild.CPU_ABI: " + Build.CPU_ABI
+                + "\nBuild.CPU_ABI2: " + Build.CPU_ABI2
+        );
 
         mIntent = new Intent("com.frezrik.jiagu.testService");
         mIntent.setPackage(getPackageName());

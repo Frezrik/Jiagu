@@ -28,7 +28,7 @@ public class AssetsUtil {
         if ("x86".equals(Build.CPU_ABI)) {
             soName = "libjiagu_x86.so";
         } else if ("x86_64".equals(Build.CPU_ABI)) {
-            soName = "libjiagu_x68_64.so";
+            soName = "libjiagu_x86_64.so";
         }
 
         Log.w("NDK_JIAGU", "soName:" + soName);
