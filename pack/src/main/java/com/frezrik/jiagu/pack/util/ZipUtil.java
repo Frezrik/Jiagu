@@ -166,9 +166,11 @@ public class ZipUtil {
 	private static long calFileCRC32(File file) throws IOException {
 		FileInputStream fi = new FileInputStream(file);
 		CheckedInputStream checksum = new CheckedInputStream(fi, new CRC32());
-		while (checksum.read() != -1) { }
+		BufferedInputStream in = new BufferedInputStream(checksum);
+		while (in.read() != -1) { }
 		long temp = checksum.getChecksum().getValue();
 		fi.close();
+		in.close();
 		checksum.close();
 		return temp;
 	}
